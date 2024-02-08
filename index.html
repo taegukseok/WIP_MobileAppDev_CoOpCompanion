@@ -1,0 +1,279 @@
+<!--
+Course: PROG2435 - Sec 3 - Programming Mobile Applications I
+Purpose: Assignment 1 - Build a mobile web app prototype with jQuery and jQuery Mobile.
+Created by: Taeguk Seok
+Student ID: 8808516
+Email: tseok8516@conestogac.on.ca
+Last Edited: 2024-02-04
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <!-- Set the viewport properties for responsive design -->
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <title>TS Feedback A1</title>
+        <!-- Include jQuery library -->
+        <script src="js/lib/jquery-2.1.4.js"></script>
+        <!-- Include jQuery Mobile library -->
+        <script src="js/lib/jquery.mobile-1.4.5.js"></script>
+        <!-- Include jQuery Validation library for the Assignment 2 & 3 -->
+        <script src="js/lib/jquery.validate.js"></script>
+        <!-- Include jQuery Mobile stylesheet -->
+        <link href="css/lib/jquery.mobile-1.4.5.css" rel="stylesheet">
+        <!-- Include custom JavaScript files -->
+        <script src="js/database.js"></script>
+        <script src="js/DAL.js"></script>
+        <script src="js/models.js"></script>
+        <script src="js/util.js"></script>
+        <script src="js/facade.js"></script>
+        <script src="js/global.js"></script>
+        <!-- Include custom CSS styles -->
+        <link href="css/mystyle.css" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- tsHome Page: Main landing page of the app -->
+        <div id="tsHomePage" data-role="page">
+            <!-- Page Header -->
+            <header data-position="fixed" data-role="header" data-theme="a">
+                <h1>TS Feedback A1</h1>
+                <!-- Navigation bar with links to different pages of the app -->
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <!-- The Home Page is highlighted in the navbar to indicate the current page -->
+                        <li><a href="#tsHomePage" data-icon="home" class="ui-btn-active ui-state-persist">Home</a></li>
+                        <li><a href="#tsAddFeedbackPage" data-icon="plus">Add</a></li>
+                        <li><a href="#tsViewFeedbackPage" data-icon="grid">Reviews</a></li>
+                        <li><a href="#tsSettingsPage" data-icon="gear">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <!-- Content Section -->
+            <section data-role="content">
+                <h2>Taeguk Seok's Feedback A1 App</h2>
+                <p>Welcome to the Taeuk Seok's Feedback A1 app. A prototype designed for mobile programming class.
+                    This is the first iteration of the app to keep track of different places you visited
+                    along with your reviews.</p>
+                <!-- This is a centered image with 80% width and styling applied for horizontal centering
+                via a separate CSS file. -->
+                <div id="home_centerImage">
+                    <img src="img/ts-image.png" alt="Feedback"/>
+                </div>
+                <p>Please feel free to contact me if you have any suggestions!</p>
+                <!-- Contact information -->
+                <a href="tel:5197485220" class="ui-btn ui-icon-plus ui-btn-icon-left ui-shadow ui-corner-all">
+                    Call: 519.748.5220
+                </a>
+                <a href="mailto:tseok8516@conestogac.on.ca" class="ui-btn ui-icon-plus ui-btn-icon-left ui-shadow
+                ui-corner-all">
+                    tseok8516@conestogac.on.ca
+                </a>
+                <p>Website:</p>
+                <a href="https://www.conestogac.on.ca/" class="ui-btn ui-icon-plus ui-btn-icon-left ui-shadow
+                ui-corner-all">
+                    Conestoga College
+                </a>
+            </section>
+            <!-- Footer with fixed positioning for consistency across pages -->
+            <footer data-position="fixed" data-role="footer" data-theme="a">
+                <h1> &copy; 2024 Taeguk Seok </h1>
+            </footer>
+        </div>
+
+        <!--tsAddFeedback Page-->
+        <div id="tsAddFeedbackPage" data-role="page">
+            <!-- Page Header -->
+            <header data-position="fixed" data-role="header" data-theme="a">
+                <h1>Add a Feedback</h1>
+                <!-- Navigation bar -->
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li><a href="#tsHomePage" data-icon="home">Home</a></li>
+                        <!-- The AddFeedback Page is highlighted in the navbar to indicate the current page -->
+                        <li><a href="#tsAddFeedbackPage" data-icon="plus" class="ui-btn-active ui-state-persist">Add</a>
+                        </li>
+                        <li><a href="#tsViewFeedbackPage" data-icon="grid">Reviews</a></li>
+                        <li><a href="#tsSettingsPage" data-icon="gear">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <!-- Content Section -->
+            <section data-role="content">
+                <div id="mainDiv">
+                    <!-- Feedback form for inputting new feedback entries -->
+                    <form id="feedbackAddForm" name="feedbackAddForm">
+                        <!-- Input field for the business name related to the feedback -->
+                        <label for="txtBusinessNameAdd">Business Name:</label>
+                        <input type="text" id="txtBusinessNameAdd" name="txtBusinessNameAdd" data-clear-btn="true">
+                        <!-- Input field for the reviewer's email -->
+                        <label for="txtReviewerEmailAdd">Reviewer Email:</label>
+                        <input type="text" id="txtReviewerEmailAdd" name="txtReviewerEmailAdd" data-clear-btn="true">
+                        <!-- Textarea for the reviewer's comments -->
+                        <label for="txtReviewerCommentsAdd">Reviewer Comments:</label>
+                        <textarea id="txtReviewerCommentsAdd" name="txtReviewerCommentsAdd" data-clear-btn="true"
+                                  rows="2"></textarea>
+                        <!-- Input for overall rating on a scale of 1 to 100 -->
+                        <label for="txtOverallRatingsAdd">Overall Ratings (1-100):</label>
+                        <input type="number" id="txtOverallRatingsAdd" name="txtOverallRatingsAdd" min="1" max="100">
+                        <!-- Save button to submit the form -->
+                        <button id="btnSave" name="btnSave" type="submit" data-inline="true" data-role="button"
+                                class="ui-btn-active" onclick="return false">Save
+                        </button>
+                    </form>
+                </div>
+            </section>
+            <!-- Footer with fixed positioning for consistency across pages -->
+            <footer data-position="fixed" data-role="footer" data-theme="a">
+                <h1> &copy; 2024 Taeguk Seok </h1>
+            </footer>
+        </div>
+
+        <!--tsViewFeedback Page-->
+        <div id="tsViewFeedbackPage" data-role="page">
+            <!-- Page Header -->
+            <header data-position="fixed" data-role="header" data-theme="a">
+                <h1>List of Reviews</h1>
+                <!-- Navigation bar -->
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li><a href="#tsHomePage" data-icon="home">Home</a></li>
+                        <li><a href="#tsAddFeedbackPage" data-icon="plus">Add</a></li>
+                        <!-- The ViewFeedback Page is highlighted in the navbar to indicate the current page -->
+                        <li><a href="#tsViewFeedbackPage" data-icon="grid" class="ui-btn-active ui-state-persist">
+                            Reviews</a>
+                        </li>
+                        <li><a href="#tsSettingsPage" data-icon="gear">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <!-- Content Section -->
+            <section data-role="content">
+                <!-- List of reviews -->
+                <ul id="listViewFeedback" data-role="listview" data-icon="false" class="ui-listview-inset">
+                    <!-- Each list item represents a single review that can be clicked to modify -->
+                    <li>
+                        <a href="#tsModifyFeedbackPage">
+                            <h2>Business Name: LooBapBap</h2>
+                            <p>Reviewer Email: tseok8516@conestogac.on.ca</p>
+                            <p>Comments: Love this Korean restaurant, the food is so good!</p>
+                            <p>Overall Rating: 99%</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tsModifyFeedbackPage">
+                            <h2>Business Name: MyungGA Korean Restaurant</h2>
+                            <p>Reviewer Email: tseok8516@conestogac.on.ca</p>
+                            <p>Comments: Great service! Amazing Korean dishes!</p>
+                            <p>Overall Rating: 100%</p>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <!-- Footer with fixed positioning for consistency across pages -->
+            <footer data-position="fixed" data-role="footer" data-theme="a">
+                <h1> &copy; 2024 Taeguk Seok </h1>
+            </footer>
+        </div>
+
+        <!--tsModifyFeedback Page-->
+        <div id="tsModifyFeedbackPage" data-role="page">
+            <!-- Page Header -->
+            <header data-position="fixed" data-role="header" data-theme="a">
+                <h1>Modify Feedback</h1>
+                <!-- Navigation bar -->
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li><a href="#tsHomePage" data-icon="home">Home</a></li>
+                        <li><a href="#tsAddFeedbackPage" data-icon="plus">Add</a></li>
+                        <!-- The ModifyFeedback page is highlighted in the navbar to indicate the current page -->
+                        <li><a href="#tsViewFeedbackPage" data-icon="grid" class="ui-btn-active ui-state-persist">
+                            Reviews</a>
+                        </li>
+                        <li><a href="#tsSettingsPage" data-icon="gear">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <!-- Content Section -->
+            <section data-role="content">
+                <!-- Form for modifying existing feedback entries -->
+                <form id="feedbackModifyForm" name="feedbackModifyForm">
+                    <!-- Business name input field pre-filled with existing data for modification -->
+                    <label for="txtBusinessNameModify">Business Name:</label>
+                    <input type="text" id="txtBusinessNameModify" name="txtBusinessNameModify" data-clear-btn="false"
+                           value="LooBapBap">
+                    <!-- Reviewer email input field pre-filled with existing data for modification -->
+                    <label for="txtReviewerEmailModify">Reviewer Email:</label>
+                    <input type="email" id="txtReviewerEmailModify" name="txtReviewerEmailModify" data-clear-btn="false"
+                           value="tseok8516@conestogac.on.ca">
+                    <!-- Textarea for reviewer comments, pre-filled with existing feedback for editing -->
+                    <label for="txtReviewerCommentsModify">Reviewer Comments:</label>
+                    <textarea id="txtReviewerCommentsModify" name="txtReviewerCommentsModify" data-clear-btn="true"
+                              rows="2">Love this Korean restaurant, the food is so good!</textarea>
+                    <!-- Overall rating input field, pre-filled with existing rating for adjustment -->
+                    <label for="txtOverallRatingsModify">Overall Ratings (1-100):</label>
+                    <input type="number" id="txtOverallRatingsModify" name="txtOverallRatingsModify" min="1" max="100"
+                           value="99">
+                    <!-- Button group for form actions: Cancel, Delete, or Update the feedback -->
+                    <div class="modify_controlgroup">
+                        <div data-role="controlgroup" data-type="horizontal" class="buttons_controlgroup">
+                            <button id="btnCancel" name="btnCancel" type="button" data-theme="a">Cancel</button>
+                            <button id="btnDelete" name="btnDelete" type="button" data-theme="b">Delete</button>
+                            <button id="btnUpdate" name="btnUpdate" type="button" class="ui-btn-active">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <!-- Footer with fixed positioning for consistency across pages -->
+            <footer data-position="fixed" data-role="footer" data-theme="a">
+                <h1> &copy; 2024 Taeguk Seok </h1>
+            </footer>
+        </div>
+
+        <!--tsSettings Page-->
+        <div id="tsSettingsPage" data-role="page">
+            <!-- Page Header -->
+            <header data-position="fixed" data-role="header" data-theme="a">
+                <h1>Settings</h1>
+                <!-- Navigation bar -->
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li><a href="#tsHomePage" data-icon="home">Home</a></li>
+                        <li><a href="#tsAddFeedbackPage" data-icon="plus">Add</a></li>
+                        <li><a href="#tsViewFeedbackPage" data-icon="grid">Reviews</a></li>
+                        <!-- The Settings page is highlighted in the navbar to indicate the current page -->
+                        <li><a href="#tsSettingsPage" data-icon="gear"
+                               class="ui-btn-active ui-state-persist">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <!-- Content Section -->
+            <section data-role="content">
+                <!-- Settings form -->
+                <form id="settingsForm" name="settingsForm">
+                    <!-- Field for setting a default reviewer email to pre-fill forms -->
+                    <label for="txtDefaultReviewerEmail">Default reviewer Email:</label>
+                    <input type="text" id="txtDefaultReviewerEmail" name="txtDefaultReviewerEmail"
+                           data-clear-btn="true">
+                    <!-- Button to save -->
+                    <button type="button" id="btnSaveDefaults" name="btnSaveDefaults" data-role="button"
+                            class="ui-btn-active">
+                        Save Defaults
+                    </button>
+                    <!-- Button to clear all reviews from the application's storage -->
+                    <button type="button" id="btnClearAllReviews" name="btnClearAllReviews" data-role="button"
+                            data-theme="b">
+                        Clear all reviews
+                    </button>
+                </form>
+            </section>
+            <!-- Footer with fixed positioning for consistency across pages -->
+            <footer data-position="fixed" data-role="footer" data-theme="a">
+                <h1> &copy; 2024 Taeguk Seok </h1>
+            </footer>
+        </div>
+
+    </body>
+</html>

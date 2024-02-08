@@ -1,0 +1,19 @@
+/* Center the element horizontally for better screen optimization */
+#home_centerImage {
+    text-align: center;
+}
+
+/* Style the image with 80% width for improved responsive design */
+#home_centerImage img {
+    width: 80%;
+    height: auto;
+    display: inline-block;
+}
+
+.modify_controlgroup {
+    text-align: center;
+}
+
+.modify_controlgroup > .buttons_controlgroup {
+    display: inline-block;
+}
